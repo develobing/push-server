@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Push Server Client</title>
+
+    <style>
+      body {
+        font-family: 'Lato', sans-serif;
+        padding: 0 1rem;
+        text-align: center;
+      }
+
+      button {
+        padding: 0.5rem 3rem;
+        font-size: 2rem;
+        background: #66de93;
+        color: white;
+        border: none;
+        border-radius: 5px;
+      }
+
+      #unsubscribe button {
+        background: #eb3f2f;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+
+    <script defer src="main.js"></script>
+  </head>
+
+  <body>
+    <h1>Push Notifications</h1>
+    <hr />
+
+    <div id="subscribe">
+      <p><i>Subscribe to receive Push Notification</i></p>
+      <button onclick="subscribe()">Subscribe</button>
+    </div>
+
+    <div id="unsubscribe" class="hidden">
+      <p><i>Unsubscribe from Push Notification</i></p>
+      <button onclick="setSubscribedStatus(false)">Unsubscribe</button>
+    </div>
+  </body>
+</html>

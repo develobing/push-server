@@ -1,0 +1,21 @@
+{
+  "name": "push-server",
+  "version": "1.0.0",
+  "description": "Web Push Server",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "vapid": "node_modules/web-push/src/cli.js generate-vapid-keys --json > server/vapid.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "urlsafe-base64": "^1.0.0",
+    "web-push": "^3.6.7"
+  }
+}
