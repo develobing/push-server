@@ -18,6 +18,13 @@ const server = http.createServer((req, res) => {
     req
       .on('data', (chunk) => body.push(chunk))
       .on('end', () => {
+        // Parse Subscription body to object
+        let subscription = JSON.parse(Buffer.concat(body).toString());
+
+        // Store subscription for push notifications
+        push.addSubscription(subscription);
+
+        // Respond
         res.end('Subscribed!');
       });
   }
@@ -39,6 +46,10 @@ const server = http.createServer((req, res) => {
     req
       .on('data', (chunk) => body.push(chunk))
       .on('end', () => {
+        // Send notification with POST body
+        push.send(body.toString());
+
+        // Respond
         res.end('Push Sent!');
       });
   }

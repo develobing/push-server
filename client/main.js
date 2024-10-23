@@ -44,19 +44,40 @@ const getApplicationServerKey = () => {
   );
 };
 
+// Unsubscribe from push notification
+const unsubscribe = () => {
+  // Unsubscribe & update UI
+  swReg.pushManager.getSubscription().then((subscription) => {
+    subscription.unsubscribe().then(() => {
+      setSubscribedStatus(false);
+    });
+  });
+};
+
 // Subscribe for push notification
 const subscribe = () => {
   // Check if the service worker is registered
   if (!swReg) return console.error('Service Worker not registered');
 
   // Get application server key from the push server
-  getApplicationServerKey().then((key) => {
-    // Subscribe using the service worker registration and application server key
-    console.log('key', key);
+  getApplicationServerKey().then((applicationServerKey) => {
+    // Subscribe
+    swReg.pushManager
+      .subscribe({
+        userVisibleOnly: true,
+        applicationServerKey,
+      })
+      .then((res) => res.toJSON())
+      .then((subscription) => {
+        console.log('subscribe() - subscription', subscription);
+
+        // Pass subscription to server
+        fetch(`${serverUrl}/subscribe`, {
+          method: 'POST',
+          body: JSON.stringify(subscription),
+        })
+          .then(setSubscribedStatus)
+          .catch(unsubscribe);
+      });
   });
 };
-
-fetch('http://localhost:3333/push', { method: 'POST' }).then(async (res) => {
-  const text = await res.text();
-  console.log(text);
-});
